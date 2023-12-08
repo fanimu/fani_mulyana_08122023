@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style></style>
+    <title>Form Data Diri</title>
+  </head>
+  <body>
+    <h1>Form Data Diri</h1>
+    <hr />
+
+    <form>
+      <table>
+        <tr>
+          <td><label for="nama">Nama Lengkap:</label></td>
+          <td><input type="text" id="nama" name="nama" /></td>
+        </tr>
+        <tr>
+          <td><label for="tempat">Tempat Lahir:</label></td>
+          <td><input type="text" id="tempat" name="tempat" /></td>
+        </tr>
+        <tr>
+          <td><label for="tanggal">Tanggal Lahir:</label></td>
+          <td><input type="date" id="tanggal" name="tanggal" /></td>
+        </tr>
+        <tr>
+          <td><label for="alamat">Alamat:</label></td>
+          <td><textarea id="alamat" name="alamat"></textarea></td>
+        </tr>
+        <tr>
+          <td><label for="telp">No. Telp:</label></td>
+          <td><input type="tel" id="telp" name="telp" /></td>
+        </tr>
+        <tr>
+          <td><label for="jenis-kelamin">Jenis Kelamin:</label></td>
+          <td>
+            <input type="radio" id="pria" name="jenis-kelamin" value="pria" />
+            <label for="pria">Pria</label>
+            <input type="radio" id="wanita" name="jenis-kelamin" value="wanita" />
+            <label for="wanita">Wanita</label>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="agama">Agama:</label></td>
+          <td>
+            <select id="agama" name="agama">
+              <option value="Islam">Islam</option>
+              <option value="Kristen">Kristen</option>
+              <option value="Katolik">Katolik</option>
+              <option value="Hindu">Hindu</option>
+              <option value="Buddha">Buddha</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="hobi">Hobi:</label></td>
+          <td>
+            <input type="checkbox" id="baca_buku" name="hobi" value="baca buku" />
+            <label for="baca_buku">Baca Buku</label>
+            <input type="checkbox" id="olahraga" name="hobi" value="olahraga" />
+            <label for="olahraga">Olah Raga</label>
+            <input type="checkbox" id="main_game" name="hobi" value="main game" />
+            <label for="main_game">Main Game</label>
+            <input type="checkbox" id="hiking" name="hobi" value="hiking" />
+            <label for="hiking">Hiking</label>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <br />
+            <button type="button" onclick="displayData()">Tampilkan</button>
+            <button type="reset">Reset</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+    <script>
+      function displayData() {
+        var nama = document.getElementById('nama').value;
+        var tempat = document.getElementById('tempat').value;
+        var tanggal = document.getElementById('tanggal').value;
+        var alamat = document.getElementById('alamat').value;
+        var telp = document.getElementById('telp').value;
+        var jenisKelamin = document.querySelector('input[name="jenis-kelamin"]:checked').value;
+        var agama = document.getElementById('agama').value;
+        var hobi = document.querySelectorAll('input[name="hobi"]:checked');
+        var hobiValues = [];
+        for (var i = 0; i < hobi.length; i++) {
+          hobiValues.push(hobi[i].value);
+        }
+
+        var alertMessage =
+          'Nama Lengkap: ' +
+          nama +
+          '\n' +
+          'Tempat Lahir: ' +
+          tempat +
+          '\n' +
+          'Tanggal Lahir: ' +
+          tanggal +
+          '\n' +
+          'Alamat: ' +
+          alamat +
+          '\n' +
+          'No. Telp: ' +
+          telp +
+          '\n' +
+          'Jenis Kelamin: ' +
+          jenisKelamin +
+          '\n' +
+          'Agama: ' +
+          agama +
+          '\n' +
+          'Hobi: ' +
+          hobiValues.join(', ');
+
+        alert(alertMessage);
+      }
+    </script>
+  </body>
+</html>

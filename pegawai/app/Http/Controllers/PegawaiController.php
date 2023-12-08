@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pegawai;
+use File;
 
 class PegawaiController extends Controller
 {
@@ -20,7 +21,25 @@ class PegawaiController extends Controller
 
     public function store(Request $request)
     {
-        Pegawai::create($request->all());
+        $request->validate([
+            'pegawai_nama' => 'required',
+            'pegawai_umur' => 'required|numeric',
+            'pegawai_alamat' => 'required',
+            'foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi jenis dan ukuran file
+        ]);
+
+        $input = $request->all();
+
+        // Handle file upload
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads'), $fileName);
+            $input['foto'] = 'uploads/' . $fileName;
+        }
+
+        Pegawai::create($input);
+
         return redirect()->route('pegawai.index');
     }
 
@@ -38,8 +57,31 @@ class PegawaiController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'pegawai_nama' => 'required',
+            'pegawai_umur' => 'required|numeric',
+            'pegawai_alamat' => 'required',
+            'foto' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi jenis dan ukuran file
+        ]);
+
         $pegawai = Pegawai::findOrFail($id);
-        $pegawai->update($request->all());
+        $input = $request->all();
+
+        // Handle file upload
+        if ($request->hasFile('foto')) {
+            // Hapus file foto lama jika ada
+            if (File::exists(public_path($pegawai->foto))) {
+                File::delete(public_path($pegawai->foto));
+            }
+
+            $file = $request->file('foto');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads'), $fileName);
+            $input['foto'] = 'uploads/' . $fileName;
+        }
+
+        $pegawai->update($input);
+
         return redirect()->route('pegawai.index');
     }
 

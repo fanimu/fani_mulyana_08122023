@@ -21,7 +21,13 @@
             <td>{{ $p->pegawai_nama }}</td>
             <td>{{ $p->pegawai_umur }}</td>
             <td>{{ $p->pegawai_alamat }}</td>
-            <td>{{ $p->foto }}</td>
+            <td>
+                @if($p->foto)
+                    <img width="100" src="{{ asset($p->foto) }}" alt="Foto Pegawai">
+                @else
+                    Tidak Ada Foto
+                @endif
+            </td>
             <td>
                 <a href="{{ route('pegawai.show', $p->id) }}">Detail</a>
                 <a href="{{ route('pegawai.edit', $p->id) }}">Edit</a>

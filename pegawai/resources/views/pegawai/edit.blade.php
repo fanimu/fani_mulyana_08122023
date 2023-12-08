@@ -6,7 +6,7 @@
 <body>
     <h1>Edit Pegawai</h1>
 
-    <form action="{{ route('pegawai.update', $pegawai->id) }}" method="post">
+    <form action="{{ route('pegawai.update', $pegawai->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         
@@ -20,7 +20,13 @@
         <input type="text" name="pegawai_alamat" value="{{ $pegawai->pegawai_alamat }}" required><br>
 
         <label for="foto">Foto:</label>
-        <input type="text" name="foto" value="{{ $pegawai->foto }}"><br>
+        <input type="file" name="foto"><br>
+
+        @if($pegawai->foto)
+            <img src="{{ asset($pegawai->foto) }}" alt="Foto Pegawai" width="100">
+        @else
+            Tidak Ada Foto
+        @endif
 
         <button type="submit">Simpan</button>
     </form>
